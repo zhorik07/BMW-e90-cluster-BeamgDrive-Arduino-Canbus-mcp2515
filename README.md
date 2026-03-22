@@ -1,65 +1,89 @@
 # 🏎️ BMW E90 Cluster to BeamNG.drive 🏁
-### Проект по оживлению реальной приборной панели BMW e90 через Arduino и CAN-шину
+### Проект по оживлению реальной приборной панели BMW E90 через Arduino и CAN-шину.
+### Project for connecting a real BMW E90 instrument cluster to BeamNG.drive via Arduino and CAN bus.
 
-Всем привет! В этом репозитории ты найдешь подробную инструкцию «от А до Я» по подключению приборки BMW E90 к игре **BeamNG.drive**. Мы будем использовать Arduino, CAN-модуль MCP2515 и софт SimHub. 
+---
+
+## 🇷🇺 Инструкция на русском
+
+Всем привет! Этот репозиторий — подробный гайд «от А до Я» по подключению приборки BMW E90 к игре **BeamNG.drive**. 
 
 > **Цель проекта:** сделать максимально простой и понятный гайд, чтобы даже новичок мог собрать свой симрейсинг-кокпит без головной боли.
 
----
+### 🛠 Что понадобится (Железо)
 
-## 🛠 Что понадобится (Железо)
+1. **Arduino UNO** — «мозги» проекта.
+   <img width="400" src="https://github.com/user-attachments/assets/7158eb8e-e9a7-48a0-8a68-2824ac90451c" />
+2. **CAN BUS Модуль (MCP2515)** — наш переводчик для общения с приборкой.
+   <img width="300" src="https://github.com/user-attachments/assets/47d8c46a-92cb-45c9-8b2b-903fb16e7274" />
+3. **Блок питания (12В, минимум 2А)** — приборка прожорливая, USB её не потянет.
+   <img width="400" src="https://github.com/user-attachments/assets/4de35bf2-7811-4cef-ab32-aaddd08a6b0f" />
+4. **Провода Dupont** (Мама-Папа, Папа-Папа).
 
-Для сборки нам нужен минимальный набор компонентов. Я использовал именно те, что на фото ниже:
+### ⚠️ Секреты стабильной работы
+* **Общая Земля (GND):** Обязательно соедини минус блока питания, GND Ардуины и GND приборки в одну точку. Иначе данные превратятся в «мусор».
+* **Витая пара (CAN-косичка):** Провода CAN-High и CAN-Low нужно свить между собой (как косичку). Это критически важно для защиты от помех.
 
-### 1. Arduino UNO
-Сердце нашего проекта. Именно она будет принимать данные из игры и переводить их на «язык» машины.
-<img width="600" alt="Arduino UNO" src="https://github.com/user-attachments/assets/7158eb8e-e9a7-48a0-8a68-2824ac90451c" />
+### 🔌 Схема подключения
+За основу взята проверенная схема от [Adam-Sidor](https://github.com/Adam-Sidor/CAN_Cluster). 
 
-### 2. CAN BUS Модуль (MCP2515)
-Наш «переводчик». Позволяет Ардуине общаться с автомобильной шиной CAN.
-<img width="400" alt="MCP2515" src="https://github.com/user-attachments/assets/47d8c46a-92cb-45c9-8b2b-903fb16e7274" />
+<img width="800" src="https://github.com/user-attachments/assets/f008cdcb-656e-4742-a96f-c7bc1a77f513" />
 
-### 3. Блок питания (12В, минимум 2А)
-Приборка BMW «кушает» много, особенно когда горят все лампочки. Обычного USB не хватит! У меня стоит на 5А, но 2А — это необходимый минимум.
-<img width="500" alt="Power Supply" src="https://github.com/user-attachments/assets/4de35bf2-7811-4cef-ab32-aaddd08a6b0f" />
+| Пин приборки | Функция | Куда подключаем |
+| :--- | :--- | :--- |
+| **Пин 9** | +12V | Плюс блока питания |
+| **Пин 18** | GND | Минус БП + GND Ардуины |
+| **Пин 1** | CAN-High | Пин H на MCP2515 |
+| **Пин 2** | CAN-Low | Пин L на MCP2515 |
 
-### 4. Прочее:
-* **Провода Dupont:** (Мама-Папа, Папа-Папа, Мама-Мама) — для быстрых соединений.
-* **Термоусадка и паяльник:** если хочешь сделать надежно (рекомендую!).
-* **Прямые руки:** хотя бы малейшее понимание, как соединить два провода.
+### 💻 Программная часть
+1. Установите **Arduino IDE**.
+2. Установите библиотеку **MCP_CAN by Cory J. Fowler** через Library Manager.
+3. Залейте скетч `BMW_E90_Cluster_v2.ino` на Ардуину.
+4. После подачи питания приборка должна «ожить» (подсветка и самодиагностика).
+   <img width="400" src="https://github.com/user-attachments/assets/81f96a73-bc2b-4fc1-82c7-15524ec6997b" />
 
----
+> **Если горит красный подъемник:** проверьте все соединения и убедитесь, что CAN-H и CAN-L не перепутаны местами.
 
-## ⚠️ Секреты стабильной работы (Прочти, чтобы не сгорело!)
-
-1. **Общая Земля (GND):** Обязательно соедини минус (GND) от блока питания 12В с пином GND на Ардуине. Без этого данные превратятся в «мусор».
-2. **Витая пара (CAN-косичка):** Провода CAN-High и CAN-Low нужно свить между собой (как косичку). Это защитит сигнал от помех.
-
-
-
----
-
-## 🔌 Схема подключения
-
-
-
-## 🚀 Что уже работает:
-* ✅ **Спидометр** и **Тахометр** (плавно, без рывков).
-* ✅ **Уровень топлива** в баке.
-* ✅ **Мгновенный расход** (та самая стрелка под тахометром).
-* ✅ **Поворотники** (индикация на панели).
-* ✅ **Подсветка:** включается при старте двигателя в игре и гаснет при глушении.
+### 🎮 Настройка SimHub
+1. Откройте **Custom Serial Devices**.
+2. Настройте: **Baudrate 115200**, частота **20 Hz** (или 10 Hz для стабильности).
+3. В разделе **Update Message** вставьте формулу из файла `Update_Message_Simhub.txt`.
+<img width="800" src="https://github.com/user-attachments/assets/c3668ddd-f77b-4f29-a8f1-bfa285c7fa2e" />
 
 ---
 
-## 👨‍💻 Как запустить?
-1. Загрузи скетч из папки `Arduino_Code` в свою плату.
-2. Установи **SimHub** и добавь в него `Custom Serial Device`.
-3. Настрой частоту на **20 Hz** и вставь формулу из файла `SimHub_Formula.txt`.
+## 🇺🇸 English Instructions
+
+Welcome! This is a step-by-step guide on how to connect a BMW E90 instrument cluster to **BeamNG.drive**.
+
+### 🛠 Hardware Requirements
+* **Arduino UNO**
+* **CAN BUS Module (MCP2515)**
+* **Power Supply (12V, 2A min)**
+* **Dupont Wires**
+
+### ⚠️ Pro Tips for Stability
+* **Common Ground (GND):** Connect the power supply minus, Arduino GND, and Cluster GND together.
+* **Twisted Pair:** Twist the CAN-High and CAN-Low wires together to prevent signal interference.
+
+### 🔌 Wiring Diagram
+| Cluster Pin | Function | Connection |
+| :--- | :--- | :--- |
+| **Pin 9** | +12V | Power Supply (+) |
+| **Pin 18** | GND | PS (-) + Arduino GND |
+| **Pin 1** | CAN-High | MCP2515 Pin H |
+| **Pin 2** | CAN-Low | MCP2515 Pin L |
+
+### 🚀 Features / Что работает:
+* ✅ **Speedometer & Tachometer** (Smooth movement)
+* ✅ **Fuel Level**
+* ✅ **Instant Consumption** (The needle under the tachometer)
+* ✅ **Turn Signals**
+* ✅ **Dynamic Backlight** (Syncs with engine status)
 
 ---
 
-## 🤝 Помощь проекту
-Мой код не идеален. Если ты круто шаришь в C++ или CAN-протоколах — буду рад любому фидбеку и Pull Request! Давайте сделаем идеальный гайд вместе.
-
+## 🤝 Support the Project
+My code isn't perfect. If you are good with C++ or CAN protocols, feel free to contribute via Pull Requests! Let's make the ultimate guide together.
 
