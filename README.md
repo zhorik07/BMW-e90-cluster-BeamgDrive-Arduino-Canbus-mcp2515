@@ -60,14 +60,7 @@
 
 > Главное правило: провода должны **надёжно сидеть** в разъёмах. Даже слегка болтающийся контакт может всё сломать.
 
-| MCP2515 | Arduino UNO |
-|---|---|
-| VCC | 5V |
-| GND | GND |
-| CS | Pin 10 |
-| SO (MISO) | Pin 12 |
-| SI (MOSI) | Pin 11 |
-| SCK | Pin 13 |
+<img width="1394" height="697" alt="image" src="https://github.com/user-attachments/assets/41a31809-7277-4b87-857e-a6cb3736e6c6" />
 
 ---
 
@@ -145,7 +138,6 @@ time14:35     → время на дисплее
 | Instant fuel consumption | ✅ Needle below tachometer |
 | Turn signals | ✅ Left / Right / Hazard |
 | Instrument backlight | ✅ Turns on when engine starts |
-| Gear display | ✅ Shows as M1–M6 |
 | Clock display | ✅ Synced from PC |
 
 ---
@@ -184,14 +176,7 @@ Wiring diagram is borrowed from [Adam-Sidor/CAN_Cluster](https://github.com/Adam
 
 > Key rule: all wires must sit **firmly** in their connectors. Even a slightly loose contact can break everything.
 
-| MCP2515 | Arduino UNO |
-|---|---|
-| VCC | 5V |
-| GND | GND |
-| CS | Pin 10 |
-| SO (MISO) | Pin 12 |
-| SI (MOSI) | Pin 11 |
-| SCK | Pin 13 |
+<img width="1394" height="697" alt="image" src="https://github.com/user-attachments/assets/eeac772b-c74f-44cb-a684-2be96cacb73d" />
 
 ---
 
