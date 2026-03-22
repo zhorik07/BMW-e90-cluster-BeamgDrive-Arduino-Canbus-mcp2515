@@ -119,6 +119,13 @@ time14:35     → время на дисплее
 
 Код не идеален — если ты хорошо разбираешься в C++ или CAN-протоколах, буду рад любому фидбеку и Pull Request. Давай сделаем идеальный гайд вместе!
 
+📬 Контакты
+По вопросам, предложениям и просто пообщаться:
+
+📧 Email: khizhniakgeorgij07@gmail.com
+✈️ Telegram: @kkhizhniakkk
+
+
 ---
 ---
 
@@ -234,3 +241,9 @@ time14:35     → set clock display
 ## 🤝 Contributing
 
 The code isn't perfect — if you know C++ or CAN protocols well, feedback and Pull Requests are very welcome. Let's build the best guide together!
+
+📬 Contacts
+Questions, suggestions or just want to chat:
+
+📧 Email: khizhniakgeorgij07@gmail.com
+✈️ Telegram: @kkhizhniakkk
