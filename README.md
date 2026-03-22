@@ -1,89 +1,252 @@
-# 🏎️ BMW E90 Cluster to BeamNG.drive 🏁
-### Проект по оживлению реальной приборной панели BMW E90 через Arduino и CAN-шину.
-### Project for connecting a real BMW E90 instrument cluster to BeamNG.drive via Arduino and CAN bus.
+# 🏎️ BMW E90 Cluster → BeamNG.drive
+
+> **Оживи реальную приборную панель BMW E90 и подключи её к игре BeamNG.drive через Arduino и CAN-шину.**
+
+![Status](https://img.shields.io/badge/status-working-brightgreen)
+![Platform](https://img.shields.io/badge/platform-Arduino%20UNO-blue)
+![Game](https://img.shields.io/badge/game-BeamNG.drive-orange)
 
 ---
 
-## 🇷🇺 Инструкция на русском
-
-Всем привет! Этот репозиторий — подробный гайд «от А до Я» по подключению приборки BMW E90 к игре **BeamNG.drive**. 
-
-> **Цель проекта:** сделать максимально простой и понятный гайд, чтобы даже новичок мог собрать свой симрейсинг-кокпит без головной боли.
-
-### 🛠 Что понадобится (Железо)
-
-1. **Arduino UNO** — «мозги» проекта.
-   <img width="400" src="https://github.com/user-attachments/assets/7158eb8e-e9a7-48a0-8a68-2824ac90451c" />
-2. **CAN BUS Модуль (MCP2515)** — наш переводчик для общения с приборкой.
-   <img width="300" src="https://github.com/user-attachments/assets/47d8c46a-92cb-45c9-8b2b-903fb16e7274" />
-3. **Блок питания (12В, минимум 2А)** — приборка прожорливая, USB её не потянет.
-   <img width="400" src="https://github.com/user-attachments/assets/4de35bf2-7811-4cef-ab32-aaddd08a6b0f" />
-4. **Провода Dupont** (Мама-Папа, Папа-Папа).
-
-### ⚠️ Секреты стабильной работы
-* **Общая Земля (GND):** Обязательно соедини минус блока питания, GND Ардуины и GND приборки в одну точку. Иначе данные превратятся в «мусор».
-* **Витая пара (CAN-косичка):** Провода CAN-High и CAN-Low нужно свить между собой (как косичку). Это критически важно для защиты от помех.
-
-### 🔌 Схема подключения
-За основу взята проверенная схема от [Adam-Sidor](https://github.com/Adam-Sidor/CAN_Cluster). 
-
-<img width="800" src="https://github.com/user-attachments/assets/f008cdcb-656e-4742-a96f-c7bc1a77f513" />
-
-| Пин приборки | Функция | Куда подключаем |
-| :--- | :--- | :--- |
-| **Пин 9** | +12V | Плюс блока питания |
-| **Пин 18** | GND | Минус БП + GND Ардуины |
-| **Пин 1** | CAN-High | Пин H на MCP2515 |
-| **Пин 2** | CAN-Low | Пин L на MCP2515 |
-
-### 💻 Программная часть
-1. Установите **Arduino IDE**.
-2. Установите библиотеку **MCP_CAN by Cory J. Fowler** через Library Manager.
-3. Залейте скетч `BMW_E90_Cluster_v2.ino` на Ардуину.
-4. После подачи питания приборка должна «ожить» (подсветка и самодиагностика).
-   <img width="400" src="https://github.com/user-attachments/assets/81f96a73-bc2b-4fc1-82c7-15524ec6997b" />
-
-> **Если горит красный подъемник:** проверьте все соединения и убедитесь, что CAN-H и CAN-L не перепутаны местами.
-
-### 🎮 Настройка SimHub
-1. Откройте **Custom Serial Devices**.
-2. Настройте: **Baudrate 115200**, частота **20 Hz** (или 10 Hz для стабильности).
-3. В разделе **Update Message** вставьте формулу из файла `Update_Message_Simhub.txt`.
-<img width="800" src="https://github.com/user-attachments/assets/c3668ddd-f77b-4f29-a8f1-bfa285c7fa2e" />
+## 🇷🇺 Русский | [🇬🇧 English below](#-english-version)
 
 ---
 
-## 🇺🇸 English Instructions
+## 📋 Что работает
 
-Welcome! This is a step-by-step guide on how to connect a BMW E90 instrument cluster to **BeamNG.drive**.
-
-### 🛠 Hardware Requirements
-* **Arduino UNO**
-* **CAN BUS Module (MCP2515)**
-* **Power Supply (12V, 2A min)**
-* **Dupont Wires**
-
-### ⚠️ Pro Tips for Stability
-* **Common Ground (GND):** Connect the power supply minus, Arduino GND, and Cluster GND together.
-* **Twisted Pair:** Twist the CAN-High and CAN-Low wires together to prevent signal interference.
-
-### 🔌 Wiring Diagram
-| Cluster Pin | Function | Connection |
-| :--- | :--- | :--- |
-| **Pin 9** | +12V | Power Supply (+) |
-| **Pin 18** | GND | PS (-) + Arduino GND |
-| **Pin 1** | CAN-High | MCP2515 Pin H |
-| **Pin 2** | CAN-Low | MCP2515 Pin L |
-
-### 🚀 Features / Что работает:
-* ✅ **Speedometer & Tachometer** (Smooth movement)
-* ✅ **Fuel Level**
-* ✅ **Instant Consumption** (The needle under the tachometer)
-* ✅ **Turn Signals**
-* ✅ **Dynamic Backlight** (Syncs with engine status)
+| Функция | Статус |
+|---|---|
+| Спидометр | ✅ Плавно, без рывков |
+| Тахометр | ✅ Работает |
+| Уровень топлива | ✅ Нелинейная калибровка E90 |
+| Мгновенный расход | ✅ Стрелка под тахометром |
+| Поворотники | ✅ Лево / Право / Аварийка |
+| Подсветка приборки | ✅ Включается при запуске двигателя |
+| Передача | ✅ Отображается как M1–M6 |
+| Время на дисплее | ✅ Берётся с компьютера |
 
 ---
 
-## 🤝 Support the Project
-My code isn't perfect. If you are good with C++ or CAN protocols, feel free to contribute via Pull Requests! Let's make the ultimate guide together.
+## 🛠️ Что понадобится
 
+### Железо
+
+| Компонент | Комментарий |
+|---|---|
+| **Arduino UNO** | Основа проекта |
+| **CAN-модуль MCP2515** | Кристалл **8 MHz** — обязательно! |
+| **Блок питания 12В, от 2А** | Приборка потребляет много, рекомендую 5А |
+| **Провода Dupont** | Мама-Папа, Папа-Папа |
+| **Паяльник и термоусадка** | Для надёжных соединений (рекомендуется) |
+
+### Программы
+
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- [SimHub](https://www.simhubdash.com/)
+- Библиотека **MCP_CAN by Cory J. Fowler** (через Library Manager в Arduino IDE)
+
+---
+
+## ⚡ Важные моменты перед сборкой
+
+> ⚠️ **Общая земля (GND)** — обязательно соедини минус от блока питания 12В с GND на Arduino, GND на приборке и GND на CAN-модуле. Без этого данные превратятся в мусор и ничего не заработает.
+
+> 💡 **Витая пара** — провода CAN-High и CAN-Low лучше свить между собой. Это снижает электромагнитные помехи и делает соединение стабильнее.
+
+---
+
+## 🔌 Схема подключения
+
+Схема взята из проекта [Adam-Sidor/CAN_Cluster](https://github.com/Adam-Sidor/CAN_Cluster?tab=readme-ov-file) — спасибо автору!
+
+> Главное правило: провода должны **надёжно сидеть** в разъёмах. Даже слегка болтающийся контакт может всё сломать.
+
+| MCP2515 | Arduino UNO |
+|---|---|
+| VCC | 5V |
+| GND | GND |
+| CS | Pin 10 |
+| SO (MISO) | Pin 12 |
+| SI (MOSI) | Pin 11 |
+| SCK | Pin 13 |
+
+---
+
+## 💾 Программная часть
+
+### 1. Arduino
+
+1. Скачай и установи **Arduino IDE**
+2. Открой Library Manager (`Sketch → Include Library → Manage Libraries`)
+3. Найди и установи **MCP_CAN by Cory J. Fowler**
+4. Открой файл `BMW_E90_Cluster_v2.ino` и загрузи его на Arduino
+
+**Проверка:** подключи питание 12В к приборке — она должна засветиться и стрелки должны выполнить приветственный sweep. Если горит только красный значок автомобиля на домкрате — проверь все провода и соединения.
+
+### 2. SimHub
+
+1. Скачай и открой **SimHub**
+2. Перейди в раздел `Custom Serial Devices`
+3. Нажми `Add new serial device`
+4. Настрой параметры:
+   - **Serial port:** твой COM порт (Arduino)
+   - **Baudrate:** `115200`
+   - **Enable RTS:** ✅
+5. В разделе **Update messages** нажми `Edit` и вставь формулу из файла `UpdateMessage_SimHub.txt`
+6. Выставь частоту **10 Hz**
+7. Включи устройство (тумблер `Enabled`)
+
+**Проверка:** запусти BeamNG.drive, сядь за руль — под строкой формулы должны побежать числа. Это значит, что игра передаёт данные и приборка оживёт.
+
+---
+
+## 🎮 Ручное управление (без SimHub)
+
+Открой Serial Monitor в Arduino IDE (скорость 115200, New Line) и вводи команды:
+
+```
+speed80       → скорость 80 км/ч
+rpm3000       → обороты 3000
+gear3         → передача 3 (показывает M3)
+gearP / gearR / gearN / gearD  → автомат
+left1 / left0    → левый поворотник
+right1 / right0  → правый поворотник
+hazzard1 / hazzard0  → аварийка
+low1 / low0   → ближний свет
+high1 / high0 → дальний свет
+brake1 / brake0  → ручник
+fuel75        → топливо 75%
+temp90        → температура 90°C
+check1 / check0  → Check Engine
+time14:35     → время на дисплее
+```
+
+---
+
+## 🤝 Помощь проекту
+
+Код не идеален — если ты хорошо разбираешься в C++ или CAN-протоколах, буду рад любому фидбеку и Pull Request. Давай сделаем идеальный гайд вместе!
+
+---
+---
+
+## 🇬🇧 English Version
+
+> **Bring a real BMW E90 instrument cluster to life and connect it to BeamNG.drive using Arduino and CAN bus.**
+
+---
+
+## 📋 What works
+
+| Feature | Status |
+|---|---|
+| Speedometer | ✅ Smooth, no jumps |
+| Tachometer | ✅ Working |
+| Fuel level | ✅ Non-linear E90 calibration |
+| Instant fuel consumption | ✅ Needle below tachometer |
+| Turn signals | ✅ Left / Right / Hazard |
+| Instrument backlight | ✅ Turns on when engine starts |
+| Gear display | ✅ Shows as M1–M6 |
+| Clock display | ✅ Synced from PC |
+
+---
+
+## 🛠️ What you need
+
+### Hardware
+
+| Component | Notes |
+|---|---|
+| **Arduino UNO** | The brain of the project |
+| **MCP2515 CAN module** | Must have **8 MHz** crystal |
+| **12V power supply, 2A minimum** | Cluster draws a lot — 5A recommended |
+| **Dupont wires** | Male-Female, Male-Male |
+| **Soldering iron & heat shrink** | For reliable connections (recommended) |
+
+### Software
+
+- [Arduino IDE](https://www.arduino.cc/en/software)
+- [SimHub](https://www.simhubdash.com/)
+- Library: **MCP_CAN by Cory J. Fowler** (via Library Manager in Arduino IDE)
+
+---
+
+## ⚡ Important before you start
+
+> ⚠️ **Common GND** — you MUST connect the negative (GND) from the 12V power supply to GND on the Arduino, GND on the cluster, and GND on the CAN module. Without this, data will be garbage and nothing will work.
+
+> 💡 **Twisted pair** — twist the CAN-High and CAN-Low wires together. This reduces electromagnetic interference and improves stability.
+
+---
+
+## 🔌 Wiring
+
+Wiring diagram is borrowed from [Adam-Sidor/CAN_Cluster](https://github.com/Adam-Sidor/CAN_Cluster?tab=readme-ov-file) — credits to the author!
+
+> Key rule: all wires must sit **firmly** in their connectors. Even a slightly loose contact can break everything.
+
+| MCP2515 | Arduino UNO |
+|---|---|
+| VCC | 5V |
+| GND | GND |
+| CS | Pin 10 |
+| SO (MISO) | Pin 12 |
+| SI (MOSI) | Pin 11 |
+| SCK | Pin 13 |
+
+---
+
+## 💾 Software setup
+
+### 1. Arduino
+
+1. Download and install **Arduino IDE**
+2. Open Library Manager (`Sketch → Include Library → Manage Libraries`)
+3. Find and install **MCP_CAN by Cory J. Fowler**
+4. Open `BMW_E90_Cluster_v2.ino` and upload it to your Arduino
+
+**Test:** connect 12V power to the cluster — it should light up and needles should do a welcome sweep. If only the red car-on-jack icon is showing — check all your wires and connections.
+
+### 2. SimHub
+
+1. Download and open **SimHub**
+2. Go to `Custom Serial Devices`
+3. Click `Add new serial device`
+4. Configure:
+   - **Serial port:** your Arduino COM port
+   - **Baudrate:** `115200`
+   - **Enable RTS:** ✅
+5. In **Update messages** click `Edit` and paste the formula from `UpdateMessage_SimHub.txt`
+6. Set frequency to **10 Hz**
+7. Enable the device (toggle `Enabled`)
+
+**Test:** launch BeamNG.drive and get behind the wheel — you should see numbers running below the formula field. This means the game is sending data and the cluster will come alive.
+
+---
+
+## 🎮 Manual control (without SimHub)
+
+Open Serial Monitor in Arduino IDE (115200 baud, New Line) and type commands:
+
+```
+speed80       → set speed to 80 km/h
+rpm3000       → set RPM to 3000
+gear3         → gear 3 (shows M3 on display)
+gearP / gearR / gearN / gearD  → automatic gearbox
+left1 / left0    → left turn signal
+right1 / right0  → right turn signal
+hazzard1 / hazzard0  → hazard lights
+low1 / low0   → low beam
+high1 / high0 → high beam
+brake1 / brake0  → handbrake
+fuel75        → fuel level 75%
+temp90        → engine temp 90°C
+check1 / check0  → Check Engine light
+time14:35     → set clock display
+```
+
+---
+
+## 🤝 Contributing
+
+The code isn't perfect — if you know C++ or CAN protocols well, feedback and Pull Requests are very welcome. Let's build the best guide together!
